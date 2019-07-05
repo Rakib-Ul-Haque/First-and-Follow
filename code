@@ -1,0 +1,245 @@
+import itertools
+#final E=TR R=+TR R=# T=FW W=*FW W=# F=d F=(E)
+#S=ABCDE A=a A=# B=b B=# C=c D=d D=# E=e E=#
+userInput = input()
+print(userInput)
+li=userInput.split(' ')
+li
+
+"""First """
+
+#Final code
+i=0
+Flist=['{']
+del Flist[-1]
+Vlist=['{']
+del Vlist[-1]
+for a in li:
+    fs=a.split('=')
+    # for variables..
+    for a in fs[0]:
+        if a not in Vlist:
+            Vlist.append(a)
+            Flist.append(a)
+            Flist[i]=Flist[i]+'={'
+            i=i+1
+
+print(Vlist)
+print(Flist)
+print(i)
+Relist=['{']
+del Relist[-1]
+for a in li:
+    index=0
+    while index<i:
+        if a[0]==Vlist[index]:
+            if a[2] == '#':
+                if a[2] not in Flist:
+                    Flist[index]= Flist[index]+a[2]
+            elif a[2].isalpha()==0:
+                if a[2] not in Flist:
+                    Flist[index]= Flist[index]+a[2]
+            elif a[2].isalpha()==1:
+                if a[2].islower()==1:
+                    if a[2] not in Flist:
+                        Flist[index]= Flist[index]+a[2]
+                elif a[2].isupper()==1:
+                    Relist.append(a)
+        index=index+1
+print(Relist)
+print(Flist)
+def fcheck(throwdata):
+    sss=""
+    co=0
+    s=len(throwdata)
+    #print(s)
+    for a in throwdata:
+        ei=2
+        while ei<len(a):
+            for b in Flist:
+                if a[ei]==b[0]:
+                    #print(a[ei])
+                    #print(b[0])
+                    #print(len(b))
+                    if len(b)>3:
+                        if '#' not in b[3:]:
+                            while co<i:
+                                if a[0]==Vlist[co]:
+                                    if b[3:] not in Flist[co]:
+                                        Flist[co]=Flist[co]+b[3:]
+                                        #print("Value of co")
+                                        #print(co)
+                                co=co+1
+                            co=0
+                                #Flist[index]=Flist[index]+b[3:]
+                                #print(b[3:])
+                                #ei=ei+1
+                            break
+                        else:
+                            sss=sss+b[3:]
+                            #del sss[sss.find('#')]
+                            #b[3:].find('#')
+                            sss=sss.replace("#", "")
+                            while co<i:
+                                if a[0]==Vlist[co]:
+                                    if sss not in Flist[co]:
+                                        Flist[co]=Flist[co]+sss
+                                        ei=ei+1
+                                        #print("hiii",ei)
+                                        #print("Value of co")
+                                        #print(co)
+                                co=co+1
+                            co=0
+                                #Flist[index]=Flist[index]+sss
+                                #print(sss)
+                    
+                    elif len(b)<=3:
+                        print(Relist)
+                        del Relist[0]
+                        Relist.append(a)
+                        print(Relist)
+                        #ei=ei+1
+                        ei=0
+                        fcheck(Relist)
+                            
+                    #else:                
+            #print("Bincrement")
+            #print(ei)
+            break
+            '''ei=ei+1
+            print("AIncrement")
+             print(ei)'''
+                
+                
+#Relist=['E=TR','T=FW']
+#Relist=['T=WF','E=TR']
+fcheck(Relist)
+print(Flist)
+Filist=["dd"]
+del Filist[-1]
+for a in Flist:
+    a=''.join(ch for ch, _ in itertools.groupby(a))
+    Filist.append(a)
+    print(a)
+print(Filist)
+Flist.clear()
+for Filist in Filist:
+    Filist=Filist+'}'
+    Flist.append(Filist)
+    #print(Filist)
+print(Flist)
+
+"""Follow """
+# Final 1
+Fo1list=["f"]
+del Fo1list[-1]
+for dd in Vlist:
+    Fo1list.append(dd+'={')    
+
+Fo1list[0]=Fo1list[0]+'$'
+print(Fo1list)
+#final 2
+print(Fo1list)
+# Final 3
+das=""
+das1=""
+#follow==============================================
+for f1 in Vlist:
+    for sl in li:
+        s1=sl.split('=')
+        #print(len(s1[1]))
+        i=0
+        j=len(s1[1])
+        while i<j:
+            if f1==s1[1][i]:
+                if i<(j-1):
+                    if s1[1][i+1].isalpha()==0:
+                        #print(s1[1][i+1])
+                        #==============================
+                        l=0
+                        for fol in Fo1list:
+                            if f1==fol[0][0]:
+                                Fo1list[l]=Fo1list[l]+s1[1][i+1]
+                                break;
+                            l=l+1
+                        #=================================
+                    elif s1[1][i+1].isalpha()==1:
+                        if s1[1][i+1].islower()==1:
+                            #================================
+                            #print(s1[1][i+1])
+                            l=0
+                            for fol in Fo1list:
+                                if f1==fol[0][0]:
+                                    Fo1list[l]=Fo1list[l]+s1[1][i+1]
+                                    break;
+                                l=l+1
+                            #================================
+                        elif s1[1][i+1].isupper()==1:
+                            #==========================================
+                            for add in Flist:
+                                if i<(j-1):
+                                    if add[0]==s1[1][i+1]:
+                                        #print("hii",add[3:])
+                                        if "#" not in add[3:]:
+                                            l=0
+                                            for fol in Fo1list:
+                                                if f1==fol[0][0]:
+                                                    Fo1list[l]=Fo1list[l]+add[3:]
+                                                    break;
+                                                l=l+1
+                                            break
+                                        elif "#" in add[3:]:
+                                            l=0
+                                            for fol in Fo1list:
+                                                print("hh",fol)
+                                                if f1==fol[0][0]:
+                                                    print("hh",fol[0][0])
+                                                    print("oo",f1)
+                                                    Fo1list[l]=Fo1list[l]+add[3:]
+                                                    break;
+                                                l=l+1
+                                            i=i+1
+                                            if i==(j-1):
+                                                for fol in Fo1list:
+                                                    if s1[0][0]==fol[0][0]:
+                                                        das1=das1+fol[3:]
+                                                        break;
+                                                l=0
+                                                for fol in Fo1list:
+                                                    if f1==fol[0][0]:
+                                                        Fo1list[l]=Fo1list[l]+das1
+                                                        break;
+                                                    l=l+1
+                                
+                            #print("Variable",f1)
+                            #print(s1[1][i+1])
+                            #===========================================
+                    #print(s1[1][i+1])
+                elif i==(j-1):
+                    for fol in Fo1list:
+                        if s1[0][0]==fol[0][0]:
+                            das=das+fol[3:]
+                            #print("hhh",das)
+                            break;
+                        #k=k+1
+                    l=0
+                    for fol in Fo1list:
+                        if f1==fol[0][0]:
+                            Fo1list[l]=Fo1list[l]+das
+                            break;
+                        l=l+1
+            i=i+1
+#final 2
+print(Fo1list)
+
+#Final 4
+sff=""
+for d in Fo1list:
+    for ssd in d:
+        if ssd not in sff:
+            sff=sff+ssd
+            sff=sff.replace("#", "")
+            sff=sff.replace("}", "")
+            sff=sff+'}'
+    print(sff)
+    sff=""
